@@ -1,0 +1,8 @@
+# for everything
+pymongo
+music21
+
+
+# for testing
+mamba
+expects
