@@ -10,6 +10,6 @@ setup(name='Leadreader',
     url='https://github.com/raindrift/leadreader',
     packages=['leadreader'],
     entry_points = {
-        'console_scripts': ['leadreader=leadreader.command_line:main'],
+        'console_scripts': ['leadreader=leadreader.cli:main'],
     }
 )
