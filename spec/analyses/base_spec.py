@@ -1,20 +1,24 @@
 from expects import *
 from spec.helper import *
-from leadreader.base_analysis import BaseAnalysis
+from leadreader.analyses.base import BaseAnalysis
 
 # you can't instantiate BaseAnalysis directly
 # this class has stubs to implement all the abstract methods
 # so that it's possible to get an instance
-class MockAnalysis:
+class MockAnalysis(BaseAnalysis):
     def name(self):
         return 'mock'
 
-with context(MockAnalysis):
+    def analyze(self):
+        return 'mock'
+
+with context('base analysis'):
     with before.each:
         setup(self)
+        composition = None
+        self.subject = MockAnalysis(composition)
 
     with description('abstract methods'):
         with it('has a name'):
             expect(self.subject.name()).to(equal('mock'))
-
 

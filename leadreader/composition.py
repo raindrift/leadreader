@@ -1,7 +1,8 @@
 import os
 from leadreader.db import Db
+from xml.dom.minidom import parse
 
-class Composition:
+class Composition(dict):
     def __init__(self, path):
         self.db = Db().conn
         path = os.path.abspath(path)
@@ -13,11 +14,23 @@ class Composition:
         if not self.record:
             self._create_record(path)
 
+        self.__initialized = True
+
     def __getattr__(self, attr):
-        if attr in self.record:
+        try:
             return self.record[attr]
-        else:
+        except KeyError:
             raise AttributeError(attr)
+
+    def __setattr__(self, attr, value):
+        if not self.__dict__.has_key('_Composition__initialized'):  # this test allows attributes to be set in the __init__ method
+            return dict.__setattr__(self, attr, value)
+        elif self.__dict__.has_key(attr): # instance variables are maintained as-is
+            dict.__setattr__(self, attr, value)
+        else:
+            self.__dict__['record'][attr] = value
+            self.db.compositions.update_one({'_id': self.record['_id']}, {'$set': self.record})
+
 
     def _create_record(self, path):
         result = self.db.compositions.insert_one({
@@ -27,3 +40,5 @@ class Composition:
 
         self.record = self.db.compositions.find_one({'_id': result.inserted_id})
 
+    def xmldom(self):
+        return parse(self.path)
