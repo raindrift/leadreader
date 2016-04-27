@@ -19,3 +19,11 @@ Don't have Homebrew? [Get it here](http://brew.sh/)
     pip install --editable .
 
 You should be able to run the `leadreader` command in the shell. It should already be available in your path.
+
+# Tests
+
+We're using mamba with expects for unit testing.
+
+To run tests, simply do:
+
+    mamba

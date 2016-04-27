@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+import re
 from expects import *
 from leadreader.composition import Composition
 from leadreader.db import Db
@@ -8,9 +8,21 @@ with description('Composition'):
         self.db = Db('test').conn
         self.db.compositions.drop()
 
-    with it('creates an entry for the leadsheet in the db'):
-        composition = Composition('spec/fixtures/test-1-in-c-major.xml')
-        record = self.db.compositions.find_one()
+    with context('a valid leadheet file'):
+        with before.each:
+            self.composition = Composition('spec/fixtures/test-1-in-c-major.xml')
 
-        # pending
-        # expect(record.filename).to(equal('test-1-in-c-major'))
+        with it('creates an entry for the leadsheet in the db'):
+            record = self.db.compositions.find_one()
+            expect(record).to(have_keys('filename', 'path'))
+            expect(record['filename']).to(equal('test-1-in-c-major.xml'))
+
+        with it('returns leadsheet properties as native props'):
+            expect(self.composition.filename).to(equal('test-1-in-c-major.xml'))
+
+        with it('raises when the property does not exist'):
+            expect(lambda: self.composition.missing_thing).to(raise_error(AttributeError))
+
+    with context('a missing file'):
+        with it('raises an exception'):
+            expect(lambda: Composition('spec/fixtures/does-not-exist.xml')).to(raise_error(IOError))
