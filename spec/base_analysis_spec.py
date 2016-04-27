@@ -1,4 +1,5 @@
 from expects import *
+from spec.helper import *
 from leadreader.base_analysis import BaseAnalysis
 
 # you can't instantiate BaseAnalysis directly
@@ -9,8 +10,11 @@ class MockAnalysis:
         return 'mock'
 
 with context(MockAnalysis):
-    with description('example'):
-        with it('is a test'):
+    with before.each:
+        setup(self)
+
+    with description('abstract methods'):
+        with it('has a name'):
             expect(self.subject.name()).to(equal('mock'))
 
 

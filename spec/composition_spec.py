@@ -1,12 +1,10 @@
-import re
 from expects import *
+from spec.helper import *
 from leadreader.composition import Composition
-from leadreader.db import Db
 
 with description('Composition'):
     with before.each:
-        self.db = Db('test').conn
-        self.db.compositions.drop()
+        setup(self)
 
     with context('a valid leadheet file'):
         with before.each:
@@ -20,8 +18,12 @@ with description('Composition'):
         with it('returns leadsheet properties as native props'):
             expect(self.composition.filename).to(equal('test-1-in-c-major.xml'))
 
-        with it('raises when the property does not exist'):
-            expect(lambda: self.composition.missing_thing).to(raise_error(AttributeError))
+        with context('when the requested property does not exist'):
+            with it('raises an error for now'):
+                expect(lambda: self.composition.missing_thing).to(raise_error(AttributeError))
+
+            with _it('eventually runs the analysis that generates the prop'):
+                pass
 
     with context('a missing file'):
         with it('raises an exception'):
