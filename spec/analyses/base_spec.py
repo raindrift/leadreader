@@ -9,8 +9,11 @@ class MockAnalysis(BaseAnalysis):
     def name(self):
         return 'mock'
 
+    def description(self):
+        return 'mock description'
+
     def analyze(self):
-        return 'mock'
+        return 'mock analysis'
 
 with context('base analysis'):
     with before.each:

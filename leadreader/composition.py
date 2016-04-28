@@ -1,6 +1,9 @@
 import os
-from leadreader.db import Db
+import importlib
 from xml.dom.minidom import parse
+
+from leadreader.db import Db
+from leadreader.str import camelize
 
 class Composition(dict):
     def __init__(self, path):
@@ -42,3 +45,10 @@ class Composition(dict):
 
     def xmldom(self):
         return parse(self.path)
+
+    def analyze(self, analysis_name):
+        analysis_module = importlib.import_module('leadreader.analyses.' + analysis_name)
+        analysis_class = getattr(analysis_module, camelize(analysis_name))
+        analysis = analysis_class(self)
+        analysis.analyze()
+

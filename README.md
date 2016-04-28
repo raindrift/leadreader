@@ -8,8 +8,11 @@ Reads leadsheets and analyze them
 # Dependencies
 
 - Mongodb: `brew install mongodb`
+- [SciPi Superpack](http://stronginference.com/ScipySuperpack/): `sh install_superpack.sh`
 
 Don't have Homebrew? [Get it here](http://brew.sh/)
+
+Installing SciPi takes a long time. Be forewarned.
 
 # Setup for Development
 

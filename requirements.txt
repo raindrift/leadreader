@@ -2,6 +2,9 @@
 pymongo
 music21
 
+# matplotlib  # install these with SciPi Superpack
+# numpy       # See README for details
+# scipy       #
 
 # for testing
 mamba

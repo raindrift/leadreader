@@ -11,5 +11,9 @@ class BaseAnalysis():
         pass
 
     @abstractmethod
+    def description(self):
+        pass
+
+    @abstractmethod
     def analyze(self):
         pass

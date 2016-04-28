@@ -32,10 +32,10 @@ with description('Composition'):
                 expect(record['foo']).to(equal('bar'))
                 expect(self.composition.foo).to(equal('bar'))
 
-        with _description('running an analysis'):
+        with description('running an analysis'):
             with it('runs the named analysis on the sheet'):
                 self.composition.analyze('metadata')
-                expect(self.composition.metadata.title).to(equal('Test 1 in C Major'))
+                expect(self.composition.metadata['title']).to(equal('Test 1 in C Major'))
 
         with description('xmldom'):
             with it('returns a parsed xml representation of the leadsheet'):

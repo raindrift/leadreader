@@ -5,6 +5,9 @@ class Metadata(BaseAnalysis):
     def name(self):
         return 'metadata'
 
+    def description(self):
+        return 'Extract and store basic composition metadata'
+
     def analyze(self):
         dom = self.composition.xmldom()
         # the value is actually in the text node, which is the first child
