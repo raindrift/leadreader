@@ -17,3 +17,8 @@ with description('Command Line'):
             record = self.db.compositions.find_one({'filename': 'test-1-in-c-major.xml'})
             expect(record['filename']).to(equal('test-1-in-c-major.xml'))
             expect(self.db.compositions.count()).to(equal(2))
+
+        with it('runs analyses for the specified compositions'):
+            cli.main(['-s', 'spec/fixtures/test-1-in-c-major.xml', '-a', 'metadata'])
+            record = self.db.compositions.find_one({'filename': 'test-1-in-c-major.xml'})
+            expect(record['metadata']['title']).to(equal('Test 1 in C Major'))

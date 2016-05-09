@@ -37,6 +37,9 @@ with description('Composition'):
                 self.composition.analyze('metadata')
                 expect(self.composition.metadata['title']).to(equal('Test 1 in C Major'))
 
+            with it('throws an error when the analysis does not exist'):
+                expect(lambda: self.composition.analyze('missing-thing')).to(raise_error(AttributeError))
+
         with description('xmldom'):
             with it('returns a parsed xml representation of the leadsheet'):
                 dom = self.composition.xmldom()

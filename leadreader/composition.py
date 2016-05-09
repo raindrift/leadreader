@@ -47,7 +47,11 @@ class Composition(dict):
         return parse(self.path)
 
     def analyze(self, analysis_name):
-        analysis_module = importlib.import_module('leadreader.analyses.' + analysis_name)
+        try:
+            analysis_module = importlib.import_module('leadreader.analyses.' + analysis_name)
+        except ImportError:
+            raise AttributeError('Missing analysis: ' + analysis_name)
+
         analysis_class = getattr(analysis_module, camelize(analysis_name))
         analysis = analysis_class(self)
         analysis.analyze()
