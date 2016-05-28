@@ -23,9 +23,6 @@ with description('Composition'):
                 with it('raises an error for now'):
                     expect(lambda: self.composition.missing_thing).to(raise_error(AttributeError))
 
-                with _it('eventually runs the analysis that generates the prop'):
-                    pass
-
             with it('setting leadsheet properties'):
                 self.composition.foo = 'bar'
                 record = self.db.compositions.find_one({'foo': 'bar'})
@@ -35,6 +32,9 @@ with description('Composition'):
         with description('running an analysis'):
             with it('runs the named analysis on the sheet'):
                 self.composition.analyze('metadata')
+                expect(self.composition.metadata['title']).to(equal('Test 1 in C Major'))
+
+            with _it('runs the analysis that generates the prop directly from the getter'):
                 expect(self.composition.metadata['title']).to(equal('Test 1 in C Major'))
 
             with it('throws an error when the analysis does not exist'):

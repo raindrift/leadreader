@@ -22,3 +22,7 @@ with description('Command Line'):
             cli.main(['-s', 'spec/fixtures/test-1-in-c-major.xml', '-a', 'metadata'])
             record = self.db.compositions.find_one({'filename': 'test-1-in-c-major.xml'})
             expect(record['metadata']['title']).to(equal('Test 1 in C Major'))
+
+        with it('recursively searches directories for compositions'):
+            cli.main(['-r', '-s', 'spec/fixtures'])
+            expect(self.db.compositions.count()).to(equal(2))
