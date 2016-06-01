@@ -3,7 +3,7 @@ import music21
 
 class KeyKrumhansl(BaseAnalysis):
     def name(self):
-        return 'key'
+        return 'key_krumhansl'
 
     def description(self):
         return "Determine overall key using Carol Krumhansl's algorithm"

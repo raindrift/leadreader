@@ -10,7 +10,7 @@ with context('key analysis'):
         self.subject = KeyKrumhansl(self.composition)
 
     with it('identifies itself'):
-        expect(self.subject.name()).to(equal('key'))
+        expect(self.subject.name()).to(equal('key_krumhansl'))
 
     with it('fetches the composition title'):
         self.subject.analyze()
