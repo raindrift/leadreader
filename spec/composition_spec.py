@@ -15,6 +15,15 @@ with description('Composition'):
             expect(record).to(have_keys('filename', 'path'))
             expect(record['filename']).to(equal('test-1-in-c-major.xml'))
 
+        with it('is true when it exists'):
+            expect(bool(self.composition)).to(equal(True))
+
+        with it('proxies dir() to the internal record'):
+            expect(dir(self.composition)).to(equal(dir(self.composition.record)))
+
+        with it('proxies repr() to the internal record'):
+            expect(repr(self.composition)).to(equal(repr(self.composition.record)))
+
         with description('setting and getting attributes'):
             with it('returns leadsheet properties as native props'):
                 expect(self.composition.filename).to(equal('test-1-in-c-major.xml'))
@@ -49,3 +58,7 @@ with description('Composition'):
     with context('a missing file'):
         with it('raises an exception'):
             expect(lambda: Composition('spec/fixtures/does-not-exist.xml')).to(raise_error(IOError))
+
+    with context('a file that is not a leadsheet'):
+        with it('raises an exception'):
+            expect(lambda: Composition('spec/fixtures/non-leadsheet.xml')).to(raise_error(ValueError))

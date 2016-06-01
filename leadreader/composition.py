@@ -8,14 +8,21 @@ from leadreader.str import camelize
 class Composition(dict):
     def __init__(self, path):
         self.db = Db().conn
-        path = os.path.abspath(path)
+        self.path = os.path.abspath(path)
         filename = os.path.basename(path)
+        self.xml = False # memoize this
+
         if not os.path.isfile(path):
             raise IOError("file not found: " + path)
+
+        dom = self.xmldom()
+        if not dom.getElementsByTagName('score-partwise'):
+            raise ValueError(self.path + " is not a leadsheet")
+
         self.record = self.db.compositions.find_one({'filename': filename})
 
         if not self.record:
-            self._create_record(path)
+            self._create_record()
 
         self.__initialized = True
 
@@ -34,17 +41,28 @@ class Composition(dict):
             self.__dict__['record'][attr] = value
             self.db.compositions.update_one({'_id': self.record['_id']}, {'$set': self.record})
 
+    def __nonzero__(self):
+        return True
 
-    def _create_record(self, path):
+    def __dir__(self):
+        return dir(self.record)
+
+    def __repr__(self):
+        return repr(self.record)
+
+    def _create_record(self):
         result = self.db.compositions.insert_one({
-            'filename': os.path.basename(path),
-            'path': path
+            'filename': os.path.basename(self.path),
+            'path': self.path
         })
 
         self.record = self.db.compositions.find_one({'_id': result.inserted_id})
 
     def xmldom(self):
-        return parse(self.path)
+        if not self.xml:
+            self.xml = parse(self.path)
+
+        return self.xml
 
     def analyze(self, analysis_name):
         try:

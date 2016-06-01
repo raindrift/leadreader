@@ -4,8 +4,11 @@ from leadreader.composition import Composition
 def main(args=None):
     args = parse_args(args or sys.argv[1:])
 
-    def fetch_compositon(filename):
-        return Composition(filename)
+    def fetch_composition(filename):
+        try:
+            return Composition(filename)
+        except ValueError:
+            return None
 
     def find_leadsheets(paths, depth=0):
         sheets = []
@@ -22,7 +25,7 @@ def main(args=None):
         sheets = args.sheets
 
     if sheets:
-        compositions = map(fetch_compositon, sheets)
+        compositions = filter(None, map(fetch_composition, sheets))
         for composition in compositions:
             if args.analyses:
                 for analysis in args.analyses:
