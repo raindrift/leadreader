@@ -16,5 +16,6 @@ class KeyKrumhanslKessler(BaseAnalysis):
         key = score.analyze('KrumhanslKessler')
         self.composition.key = {
             'name': key.tonic.name,
-            'mode': key.mode
+            'mode': key.mode,
+            'correlationCoefficient': key.correlationCoefficient
         }

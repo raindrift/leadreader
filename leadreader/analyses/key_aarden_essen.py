@@ -16,5 +16,6 @@ class KeyAardenEssen(BaseAnalysis):
         key = score.analyze('AardenEssen')
         self.composition.key = {
             'name': key.tonic.name,
-            'mode': key.mode
+            'mode': key.mode,
+            'correlationCoefficient': key.correlationCoefficient
         }

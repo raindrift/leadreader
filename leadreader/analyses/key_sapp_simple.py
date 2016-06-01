@@ -16,5 +16,6 @@ class KeySappSimple(BaseAnalysis):
         key = score.analyze('SimpleWeights')
         self.composition.key = {
             'name': key.tonic.name,
-            'mode': key.mode
+            'mode': key.mode,
+            'correlationCoefficient': key.correlationCoefficient
         }

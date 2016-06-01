@@ -16,5 +16,6 @@ class KeyBellmanBudge(BaseAnalysis):
         key = score.analyze('BellmanBudge')
         self.composition.key = {
             'name': key.tonic.name,
-            'mode': key.mode
+            'mode': key.mode,
+            'correlationCoefficient': key.correlationCoefficient
         }

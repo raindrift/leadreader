@@ -16,3 +16,4 @@ with context('key analysis'):
         self.subject.analyze()
         expect(self.composition.key['name']).to(equal('C'))
         expect(self.composition.key['mode']).to(equal('major'))
+        expect(self.composition.key['correlationCoefficient']).to(equal(0.7249239208029984))
