@@ -12,8 +12,8 @@ class Composition(dict):
         filename = os.path.basename(path)
         self.xml = False # memoize this
 
-        if not os.path.isfile(path):
-            raise IOError("file not found: " + path)
+        if not os.path.isfile(self.path):
+            raise IOError("file not found: " + self.path)
 
         dom = self.xmldom()
         if not dom.getElementsByTagName('score-partwise'):
