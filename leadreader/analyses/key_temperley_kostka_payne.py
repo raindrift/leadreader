@@ -14,7 +14,7 @@ class KeyTemperleyKostkaPayne(BaseAnalysis):
         # when we want to do things it won't let us do
         score = music21.converter.parse(self.composition.path)
         key = score.analyze('TemperleyKostkaPayne')
-        self.composition.key = {
+        self.composition.key_temperley_kostka_payne = {
             'name': key.tonic.name,
             'mode': key.mode,
             'correlationCoefficient': key.correlationCoefficient

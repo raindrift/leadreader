@@ -14,5 +14,5 @@ with context('key analysis'):
 
     with it('fetches the composition title'):
         self.subject.analyze()
-        expect(self.composition.key['name']).to(equal('C'))
-        expect(self.composition.key['mode']).to(equal('major'))
+        expect(self.composition.key_krumhansl['name']).to(equal('C'))
+        expect(self.composition.key_krumhansl['mode']).to(equal('major'))

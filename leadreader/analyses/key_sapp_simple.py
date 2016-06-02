@@ -14,7 +14,7 @@ class KeySappSimple(BaseAnalysis):
         # when we want to do things it won't let us do
         score = music21.converter.parse(self.composition.path)
         key = score.analyze('SimpleWeights')
-        self.composition.key = {
+        self.composition.key_sapp_simple = {
             'name': key.tonic.name,
             'mode': key.mode,
             'correlationCoefficient': key.correlationCoefficient

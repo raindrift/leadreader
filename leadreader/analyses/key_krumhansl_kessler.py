@@ -14,7 +14,7 @@ class KeyKrumhanslKessler(BaseAnalysis):
         # when we want to do things it won't let us do
         score = music21.converter.parse(self.composition.path)
         key = score.analyze('KrumhanslKessler')
-        self.composition.key = {
+        self.composition.key_krumhansl_kessler = {
             'name': key.tonic.name,
             'mode': key.mode,
             'correlationCoefficient': key.correlationCoefficient
