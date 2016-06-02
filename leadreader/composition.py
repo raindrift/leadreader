@@ -33,15 +33,15 @@ class Composition(dict):
             raise AttributeError(attr)
 
     def __setattr__(self, attr, value):
-        if not self.__dict__.has_key('_Composition__initialized'):  # this test allows attributes to be set in the __init__ method
+        if '_Composition__initialized' not in self.__dict__:  # this test allows attributes to be set in the __init__ method
             return dict.__setattr__(self, attr, value)
-        elif self.__dict__.has_key(attr): # instance variables are maintained as-is
+        elif attr in self.__dict__: # instance variables are maintained as-is
             dict.__setattr__(self, attr, value)
         else:
             self.__dict__['record'][attr] = value
             self.db.compositions.update_one({'_id': self.record['_id']}, {'$set': self.record})
 
-    def __nonzero__(self):
+    def __bool__(self):
         return True
 
     def __dir__(self):

@@ -1,8 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-class BaseAnalysis():
-    __metaclass__ = ABCMeta
-
+class BaseAnalysis(metaclass=ABCMeta):
     def __init__(self, composition):
         self.composition = composition
 

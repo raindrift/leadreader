@@ -9,13 +9,19 @@ Reads leadsheets and analyze them
 
 - Mongodb: `brew install mongodb`
 - [SciPi Superpack](http://stronginference.com/ScipySuperpack/): `sh install_superpack.sh`
+- Python3+
 
 Don't have Homebrew? [Get it here](http://brew.sh/)
 
 Installing SciPi takes a long time. Be forewarned.
 
+### For ArchLinux:
+
+Install Mongodb with `pacman -S mongodb` then `systemctl start mongodb.service`.
+
 # Setup for Development
 
+    # To ensure Python3: virtualenv -p python3 env
     virtualenv env
     . env/bin/activate
     pip install -r requirements.txt

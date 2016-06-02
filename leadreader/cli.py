@@ -14,8 +14,8 @@ def main(args=None):
         sheets = []
         for path in paths:
             for root, subdirs, files in os.walk(path):
-                files = filter(lambda relpath: relpath[-4:] == '.xml', files)
-                sheets = sheets + map(lambda relpath: os.path.join(root, relpath), files)
+                files = [relpath for relpath in files if relpath[-4:] == '.xml']
+                sheets = sheets + [os.path.join(root, relpath) for relpath in files]
 
         return sheets
 
@@ -25,12 +25,12 @@ def main(args=None):
         sheets = args.sheets
 
     if sheets:
-        compositions = filter(None, map(fetch_composition, sheets))
+        compositions = [_f for _f in map(fetch_composition, sheets) if _f]
         for composition in compositions:
             if args.analyses:
                 for analysis in args.analyses:
                     composition.analyze(analysis)
-                    print "Running", analysis, 'for', composition.filename
+                    print("Running", analysis, 'for', composition.filename)
 
 def parse_args(args):
     arg_parser = argparse.ArgumentParser(description='Analyze leadsheets')
