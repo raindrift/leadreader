@@ -1,3 +1,8 @@
+<!---
+Uncomment this with the right token once you've enabled in circle :)
+[![Leadreader Build Status](https://circleci.com/gh/raindrift/leadreader.svg?style=shield&circle-token=:circle-token)])
+-->
+
 # leadreader
 Reads leadsheets and analyze them
 
