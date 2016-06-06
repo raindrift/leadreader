@@ -12,7 +12,7 @@ with context('key analysis'):
     with it('identifies itself'):
         expect(self.subject.name()).to(equal('key_bellman_budge'))
 
-    with it('fetches the composition title'):
+    with it('determines correct key'):
         self.subject.analyze()
         expect(self.composition.key_bellman_budge['name']).to(equal('F'))
         expect(self.composition.key_bellman_budge['mode']).to(equal('major'))
