@@ -1,7 +1,4 @@
-<!---
-Uncomment this with the right token once you've enabled in circle :)
-[![Leadreader Build Status](https://circleci.com/gh/raindrift/leadreader.svg?style=shield&circle-token=:circle-token)])
--->
+[![CircleCI](https://circleci.com/gh/raindrift/leadreader.svg?style=svg)](https://circleci.com/gh/raindrift/leadreader)
 
 # leadreader
 Reads leadsheets and analyze them

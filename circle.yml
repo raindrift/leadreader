@@ -3,5 +3,7 @@ machine:
     version: 3.5.1
 
 test:
+  pre:
+    - pip install --editable .
   override:
     - mamba
