@@ -1,7 +1,8 @@
-[![CircleCI](https://circleci.com/gh/raindrift/leadreader.svg?style=svg)](https://circleci.com/gh/raindrift/leadreader)
-
 # leadreader
-Reads leadsheets and analyze them
+
+[![CircleCI](https://circleci.com/gh/raindrift/leadreader.svg?style=svg&circle-token=4d5fadd2ea005b0aa3af46e1a58f40c857d26eec)](https://circleci.com/gh/raindrift/leadreader)
+
+Reads and analyzes leadsheets.
 
 # Useful tools
 
