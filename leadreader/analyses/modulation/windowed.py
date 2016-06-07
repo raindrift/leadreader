@@ -1,5 +1,4 @@
 # windowed.py
-#
 # Predict modulation points by using sliding windows.
 
 from leadreader.analyses.base import BaseAnalysis
@@ -7,7 +6,7 @@ from leadreader.analyses.key_krumhansl import KeyKrumhansl
 import music21
 import math
 
-# determine key of a composition
+# Determine which measures likely have a key modulation.
 class ModulationWindowed(BaseAnalysis):
 
     # Using default window size of 8.
@@ -37,11 +36,24 @@ class ModulationWindowed(BaseAnalysis):
         return measures
 
     def analyze(self):
-        # Use default Krumhansl.
+        modulations = []
+        print('Analyzing key modulations with window size', self.window_size)
+        # Run through each measure window, apply default Krumhansl.
         # TODO: Expose key detection algorithm as parameter.
-        algo = KeyKrumhansl(self.composition)
-        key = algo.analyze()
-        self.composition.modulations = {
-            # 'name': key.tonic.name,
-            # 'mode': key.mode,
-        }
+        i = 0
+        end = self.numMeasures()
+        tonic = mode = None
+        while i <= end:
+            window = self.getWindow(i)
+            key = window.analyze('KrumhanslSchmuckler')
+            # Notice when the tonic or mode changes.
+            if (not tonic == None and not tonic == key.tonic.name) or \
+                (not mode == None and not mode == key.mode):
+                modulations.append(i)
+            tonic = key.tonic.name
+            mode = key.mode
+            # TODO: Logging verbosity levels.
+            print('measure', i, '-', tonic, mode)
+            i += 1
+        self.composition.modulations = modulations
+        print('measures of suspected key modulation:', modulations)

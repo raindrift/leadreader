@@ -38,6 +38,21 @@ with context('key modulation detection'):
         expect(len(small.getWindow(9))).to(equal(1))
         expect(len(small.getWindow(10))).to(equal(0))
 
-    with it('finds modulation'):
+    with it('determines modulation measures with window of size 8'):
         self.subject.analyze()
-        # expect(self.composition.metadata['title']).to(equal('Test 1 in C Major'))
+        expect(self.composition.modulations).to(equal([]))
+
+    with it('determines modulation measures with window of size 4'):
+        w4 = ModulationWindowed(self.composition, 4)
+        w4.analyze()
+        expect(w4.composition.modulations).to(equal([]))
+
+    with it('determines modulation measures with window of size 3'):
+        w3 = ModulationWindowed(self.composition, 3)
+        w3.analyze()
+        expect(w3.composition.modulations).to(equal([]))
+
+    with it('determines modulation measures with window of size 2'):
+        w2 = ModulationWindowed(self.composition, 2)
+        w2.analyze()
+        expect(w2.composition.modulations).to(equal([1, 4, 5]))
