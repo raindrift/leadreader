@@ -11,7 +11,19 @@ with description('Command Line'):
             args = cli.parse_args(['-s', 'foo', 'bar'])
             expect(args.sheets).to(equal(['foo', 'bar']))
 
+        with it('takes a list of analyses'):
+            args = cli.parse_args(['-a', 'foo', 'bar'])
+            expect(args.analyses).to(equal(['foo', 'bar']))
+
+    with description('list analyses'):
+        with it('obtains list of available analyses'): 
+            expect(cli.get_analyses()).to(equal('lol'))
+
     with description('main'):
+        with it('lists available analyses'):
+            cli.main(['-l'])
+            pass
+
         with it('loads composition objects for all the specified sheets'):
             cli.main(['-s', 'spec/fixtures/test-1-in-c-major.xml', 'spec/fixtures/test-1-in-c-major-copy.xml'])
             record = self.db.compositions.find_one({'filename': 'test-1-in-c-major.xml'})
