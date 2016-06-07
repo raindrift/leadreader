@@ -1,6 +1,6 @@
 from expects import *
 from spec.helper import *
-from leadreader.analyses.modulation.windowed import *
+from leadreader.analyses.modulation_windows import *
 from leadreader.composition import Composition
 import music21
 
@@ -11,7 +11,7 @@ with context('key modulation detection'):
         self.subject = ModulationWindowed(self.composition)
 
     with it('identifies itself'):
-        expect(self.subject.name()).to(equal('modulation_windowed'))
+        expect(self.subject.name()).to(equal('modulation_windows'))
 
     with it('knows how many measures it has'):
         expect(self.subject.numMeasures()).to(equal(8))

@@ -2,7 +2,6 @@
 # Predict modulation points by using sliding windows.
 
 from leadreader.analyses.base import BaseAnalysis
-from leadreader.analyses.key_krumhansl import KeyKrumhansl
 import music21
 import math
 
@@ -17,11 +16,10 @@ class ModulationWindowed(BaseAnalysis):
             self.score = music21.converter.parse(self.composition.path)
 
     def name(self):
-        return 'modulation_windowed'
+        return 'modulation_windows'
 
     def description(self):
-        # http://web.mit.edu/music21/doc/moduleReference/moduleAnalysisDiscrete.html
-        return "Determine key using Krumhansl's algorithm and Aarden-Essen weightings (not recommended for minor)"
+        return 'Determine key modulations using sliding measure windows'
 
     def numMeasures(self):
         return len(self.score.parts[0].getElementsByClass('Measure'))
