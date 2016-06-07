@@ -41,7 +41,7 @@ def main(args=None):
                 for analysis in args.analyses:
                     composition.analyze(analysis)
                     print("Running", analysis, 'for', composition.filename)
-
+    
 def parse_args(args):
     arg_parser = argparse.ArgumentParser(description='Analyze leadsheets')
     arg_parser.add_argument(
@@ -54,6 +54,9 @@ def parse_args(args):
     arg_parser.add_argument(
       '-r', '--recursive', action='store_const', const=True,
       help='Recursively search directories')
+    # Default -h if nothing provided.
+    if 0 >= len(args):
+        arg_parser.print_help()
     return arg_parser.parse_args(args)
 
 # Analyses modules to ignore.
