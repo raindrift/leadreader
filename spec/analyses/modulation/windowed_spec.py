@@ -13,6 +13,9 @@ with context('key modulation detection'):
     with it('identifies itself'):
         expect(self.subject.name()).to(equal('modulation_windowed'))
 
+    with it('knows how many measures it has'):
+        expect(self.subject.numMeasures()).to(equal(8))
+
     with it('windowing'):
         expect(self.subject.window_size).to(equal(8))
 
@@ -22,7 +25,6 @@ with context('key modulation detection'):
 
     with it('can return a measure window'):
         small = ModulationWindowed(self.composition, 4)
-
         # Slide window from beginning to end.
         expect(len(small.getWindow(0))).to(equal(2))
         expect(len(small.getWindow(1))).to(equal(3))

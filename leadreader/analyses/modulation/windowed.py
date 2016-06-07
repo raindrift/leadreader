@@ -24,13 +24,15 @@ class ModulationWindowed(BaseAnalysis):
         # http://web.mit.edu/music21/doc/moduleReference/moduleAnalysisDiscrete.html
         return "Determine key using Krumhansl's algorithm and Aarden-Essen weightings (not recommended for minor)"
 
+    def numMeasures(self):
+        return len(self.score.parts[0].getElementsByClass('Measure'))
+
     # Obtain a window of size |window_size| centered on a measure number.
     def getWindow(self, measure):
         start = measure - math.floor(self.window_size/2)
         end = start + self.window_size - 1
         # Assume leadsheet only has 1 part.
-        parts = self.score.parts
-        measures = parts[0].measures(start, end, ignoreNumbers=True)
+        measures = self.score.parts[0].measures(start, end, ignoreNumbers=True)
         measures = measures.getElementsByClass('Measure')
         return measures
 
