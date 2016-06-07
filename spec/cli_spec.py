@@ -25,7 +25,6 @@ with description('Command Line'):
 
     with description('main'):
         with it('lists available analyses'):
-            cli.main(['-l'])
             pass
 
         with it('loads composition objects for all the specified sheets'):
