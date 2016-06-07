@@ -17,7 +17,11 @@ with description('Command Line'):
 
     with description('list analyses'):
         with it('obtains list of available analyses'): 
-            expect(cli.get_analyses()).to(equal('lol'))
+            # TODO: Should probably replace this with a fake suite of analyses, so that
+            # this does not have to be updated when new analyses are
+            # implemented.
+            expected = {'key_temperley_kostka_payne': "Determine key using Krumhansl's algorithm and Temperley-Kostka-Payne weightings", 'key_krumhansl_kessler': "Determine key using Krumhansl's algorithm and Krumhansl-Kessler weightings", 'key_bellman_budge': "Determine key using Krumhansl's algorithm and Bellman-Budge weightings", 'key_sapp_simple': "Determine key using Krumhansl's algorithm and Craig Sapp's simple weights", 'metadata': 'Extract and store basic composition metadata', 'key_krumhansl': "Determine key using Krumhansl's algorithm and Krumhansl-Shmuckler weighting", 'key_aarden_essen': "Determine key using Krumhansl's algorithm and Aarden-Essen weightings (not recommended for minor)"}
+            expect(cli.get_analyses()).to(equal(expected))
 
     with description('main'):
         with it('lists available analyses'):

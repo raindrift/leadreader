@@ -22,9 +22,12 @@ def main(args=None):
         return sheets
 
     if args.list:
-        print('Available analyses:')
-        for analysis in get_analyses():
-            print(analysis)
+        analyses = get_analyses()
+        # Aligned output.
+        template = '{0:26} - {1:50}'
+        print('\nAvailable analyses:\n')
+        for analysis, desc in analyses.items():
+            print(template.format(analysis, desc))
     
     if args.recursive:
         sheets = find_leadsheets(args.sheets)
@@ -47,7 +50,7 @@ def parse_args(args):
       '-a', '--analyses', nargs='+', help='Analyses to run on leadsheets')
     arg_parser.add_argument(
       '-l', '--list', action='store_const', const=True,
-      help='List all available analyses')
+      help='List all available analyses with descriptions')
     arg_parser.add_argument(
       '-r', '--recursive', action='store_const', const=True,
       help='Recursively search directories')
@@ -56,13 +59,25 @@ def parse_args(args):
 # Analyses modules to ignore.
 IGNORE = ['base']
 
-# Returns a list of all available analyses.
+# Returns a dict mapping available analyses name to their description.
 def get_analyses():
     # Use absolute path from the current file so that the command works from
     # any directory.
     path = os.path.dirname(os.path.abspath(__file__)) + '/analyses'
-    print(path)
-    return [f for _,f,ispkg
-        # in pkgutil.walk_packages([path])
-        in pkgutil.iter_modules([path])
-        if f not in IGNORE and not ispkg]
+    dict = {}
+    for importer, mod, ispkg in pkgutil.iter_modules([path]):
+        if mod in IGNORE or ispkg: continue
+        m = importer.find_module(mod).load_module(mod)
+        members = dir(m)
+        # Valid members look like ['BaseAnalysis', '$AnalysisClass', ...]
+        if 'BaseAnalysis' == members[0]:
+            AnalysisClass = getattr(m, members[1])
+            # Does not need to be a real composition analysis.
+            c = AnalysisClass(None)
+            # TODO: Perhaps change BaseAnalysis.description to @staticmethod,
+            # although static+abstract requires a clunkier decorator.
+            description = c.description()
+            dict[mod] = description
+    return dict
+
+
