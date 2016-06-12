@@ -11,7 +11,22 @@ with description('Command Line'):
             args = cli.parse_args(['-s', 'foo', 'bar'])
             expect(args.sheets).to(equal(['foo', 'bar']))
 
+        with it('takes a list of analyses'):
+            args = cli.parse_args(['-a', 'foo', 'bar'])
+            expect(args.analyses).to(equal(['foo', 'bar']))
+
+    with description('list analyses'):
+        with it('obtains list of available analyses'): 
+            # TODO: Should probably replace this with a fake suite of analyses, so that
+            # this does not have to be updated when new analyses are
+            # implemented.
+            expected = {'key_aarden_essen': "Determine key using Krumhansl's algorithm and Aarden-Essen weightings (not recommended for minor)", 'metadata': 'Extract and store basic composition metadata', 'key_bellman_budge': "Determine key using Krumhansl's algorithm and Bellman-Budge weightings", 'key_sapp_simple': "Determine key using Krumhansl's algorithm and Craig Sapp's simple weights", 'modulation_windows': 'Determine key modulations using sliding measure windows', 'key_temperley_kostka_payne': "Determine key using Krumhansl's algorithm and Temperley-Kostka-Payne weightings", 'key_krumhansl': "Determine key using Krumhansl's algorithm and Krumhansl-Shmuckler weighting", 'key_krumhansl_kessler': "Determine key using Krumhansl's algorithm and Krumhansl-Kessler weightings"}
+            expect(cli.get_analyses()).to(equal(expected))
+
     with description('main'):
+        with it('lists available analyses'):
+            pass
+
         with it('loads composition objects for all the specified sheets'):
             cli.main(['-s', 'spec/fixtures/test-1-in-c-major.xml', 'spec/fixtures/test-1-in-c-major-copy.xml'])
             record = self.db.compositions.find_one({'filename': 'test-1-in-c-major.xml'})

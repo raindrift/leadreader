@@ -1,6 +1,7 @@
 from leadreader.analyses.base import BaseAnalysis
 import music21
 
+# determine key of a composition
 class KeyAardenEssen(BaseAnalysis):
     def name(self):
         return 'key_aarden_essen'

@@ -1,6 +1,6 @@
 from leadreader.analyses.base import BaseAnalysis
 
-# determine the key of a composition
+# determine basic metadata of a composition
 class Metadata(BaseAnalysis):
     def name(self):
         return 'metadata'

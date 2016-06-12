@@ -12,7 +12,7 @@ with context('key analysis'):
     with it('identifies itself'):
         expect(self.subject.name()).to(equal('key_temperley_kostka_payne'))
 
-    with it('fetches the composition title'):
+    with it('determines correct key'):
         self.subject.analyze()
         expect(self.composition.key_temperley_kostka_payne['name']).to(equal('C'))
         expect(self.composition.key_temperley_kostka_payne['mode']).to(equal('major'))
