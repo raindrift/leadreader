@@ -8,7 +8,7 @@ with context('key modulation detection'):
     with before.each:
         setup(self)
         self.composition = Composition('spec/fixtures/test-1-in-c-major.xml')
-        self.subject = ModulationWindowed(self.composition)
+        self.subject = ModulationWindows(self.composition)
 
     with it('identifies itself'):
         expect(self.subject.name()).to(equal('modulation_windows'))
@@ -20,11 +20,11 @@ with context('key modulation detection'):
         expect(self.subject.window_size).to(equal(8))
 
     with it('can use a custom window size'):
-        small = ModulationWindowed(None, 3)
+        small = ModulationWindows(None, 3)
         expect(small.window_size).to(equal(3))
 
     with it('can return a measure window'):
-        small = ModulationWindowed(self.composition, 4)
+        small = ModulationWindows(self.composition, 4)
         # Slide window from beginning to end.
         expect(len(small.get_window(0))).to(equal(2))
         expect(len(small.get_window(1))).to(equal(3))
@@ -43,16 +43,16 @@ with context('key modulation detection'):
         expect(self.composition.modulations).to(equal([]))
 
     with it('determines modulation measures with window of size 4'):
-        w4 = ModulationWindowed(self.composition, 4)
+        w4 = ModulationWindows(self.composition, 4)
         w4.analyze()
         expect(w4.composition.modulations).to(equal([]))
 
     with it('determines modulation measures with window of size 3'):
-        w3 = ModulationWindowed(self.composition, 3)
+        w3 = ModulationWindows(self.composition, 3)
         w3.analyze()
         expect(w3.composition.modulations).to(equal([]))
 
     with it('determines modulation measures with window of size 2'):
-        w2 = ModulationWindowed(self.composition, 2)
+        w2 = ModulationWindows(self.composition, 2)
         w2.analyze()
         expect(w2.composition.modulations).to(equal([1, 4, 5]))

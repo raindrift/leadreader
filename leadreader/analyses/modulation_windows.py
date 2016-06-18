@@ -9,12 +9,12 @@ import music21
 from leadreader.analyses.base import BaseAnalysis
 
 
-class ModulationWindowed(BaseAnalysis):
+class ModulationWindows(BaseAnalysis):
     """ Determine which measures likely have a key modulation. """
 
     def __init__(self, composition, window_size=8):
         """ Using default window size of 8. """
-        super(ModulationWindowed, self).__init__(composition)
+        super(ModulationWindows, self).__init__(composition)
         self.window_size = window_size
         if composition:
             self.score = music21.converter.parse(self.composition.path)
