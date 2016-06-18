@@ -1,0 +1,7 @@
+#!/bin/bash
+# pylint --output-format=colorized --rcfile=googlecl-pylint.rc leadreader
+args="--output-format=colorized -dW -dI"
+rc="--rcfile=pylint.rc"
+# pylint --output-format=colorized -d W --rcfile=googlecl-pylint.rc leadreader
+# pylint --output-format=colorized -d W leadreader
+pylint $args $rc leadreader

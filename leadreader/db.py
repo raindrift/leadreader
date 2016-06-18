@@ -1,9 +1,15 @@
+"""
+db.py
+"""
 from pymongo import MongoClient
 
-# singleton pattern, from Bruce Eckel
 
-class Db:
-    class __Db:
+class Db:  # pylint: disable=too-few-public-methods
+    """
+    Database.
+    Singleton pattern, from Bruce Eckel
+    """
+    class __Db:  # pylint: disable=invalid-name
         def __init__(self, dbname):
             self.val = dbname
             self.client = MongoClient('mongodb://localhost:27017/')

@@ -1,15 +1,19 @@
-# windowed.py
-# Predict modulation points by using sliding windows.
+"""
+windowed.py
+
+Predict modulation points by using sliding windows.
+"""
+import math
+import music21
 
 from leadreader.analyses.base import BaseAnalysis
-import music21
-import math
 
-# Determine which measures likely have a key modulation.
+
 class ModulationWindowed(BaseAnalysis):
+    """ Determine which measures likely have a key modulation. """
 
-    # Using default window size of 8.
     def __init__(self, composition, window_size=8):
+        """ Using default window size of 8. """
         super(ModulationWindowed, self).__init__(composition)
         self.window_size = window_size
         if composition:
@@ -21,11 +25,15 @@ class ModulationWindowed(BaseAnalysis):
     def description(self):
         return 'Determine key modulations using sliding measure windows'
 
-    def numMeasures(self):
+    def num_measures(self):
+        """ Return integer of total number of measures in the composition. """
         return len(self.score.parts[0].getElementsByClass('Measure'))
 
-    # Obtain a window of size |window_size| centered on a measure number.
-    def getWindow(self, measure):
+    def get_window(self, measure):
+        """
+        Given measure number |measure|, obtain a window of size |window_size|
+        centered on |measure|.
+        """
         start = measure - math.floor(self.window_size/2)
         end = start + self.window_size - 1
         # Assume leadsheet only has 1 part.
@@ -39,14 +47,14 @@ class ModulationWindowed(BaseAnalysis):
         # Run through each measure window, apply default Krumhansl.
         # TODO: Expose key detection algorithm as parameter.
         i = 0
-        end = self.numMeasures()
+        end = self.num_measures()
         tonic = mode = None
         while i <= end:
-            window = self.getWindow(i)
+            window = self.get_window(i)
             key = window.analyze('KrumhanslSchmuckler')
             # Notice when the tonic or mode changes.
-            if (not tonic == None and not tonic == key.tonic.name) or \
-                (not mode == None and not mode == key.mode):
+            if (not tonic is None and not tonic == key.tonic.name) or \
+                (not mode is None and not mode == key.mode):
                 modulations.append(i)
             tonic = key.tonic.name
             mode = key.mode

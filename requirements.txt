@@ -9,3 +9,6 @@ music21
 # for testing
 mamba
 expects
+
+# for code quality
+pylint
