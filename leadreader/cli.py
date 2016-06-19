@@ -43,12 +43,23 @@ def main(args=None):
         sheets = args.sheets
 
     if sheets:
+        print("Analyzing", len(sheets), "leadsheets...")
         compositions = [_f for _f in map(_fetch_composition, sheets) if _f]
-        for composition in compositions:
-            if args.analyses:
-                for analysis in args.analyses:
+        if not args.analyses:
+            print("No analyses specified. See --list.")
+            return
+        valids = 0
+        for analysis in args.analyses:
+            for composition in compositions:
+                try:
                     composition.analyze(analysis)
-                    print("Running", analysis, 'for', composition.filename)
+                except AttributeError as err:
+                    print(err)
+                    continue
+                valids += 1
+                print("Running", analysis, 'for', composition.filename)
+        print(valids, "out of", len(args.analyses),
+              "specified analyses succeeded.")
 
 def parse_args(args):
     """ Setup all command line arguments. """

@@ -89,4 +89,3 @@ class Composition(dict):
         analysis_class = getattr(analysis_module, camelize(analysis_name))
         analysis = analysis_class(self)
         analysis.analyze()
-

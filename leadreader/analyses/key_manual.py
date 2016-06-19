@@ -43,8 +43,8 @@ class KeyManual(BaseAnalysis):
         while tonic == '':
             recv = prompt_for_key()
             tonic, mode = self.validate_key(recv)
-        print("Tonic: ", tonic)
-        print("Mode: ", mode)
+        print("Tonic:", tonic)
+        print("Mode:", mode)
         return tonic, mode
 
     def analyze(self):
