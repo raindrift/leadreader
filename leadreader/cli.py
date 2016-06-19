@@ -29,7 +29,8 @@ def main(args=None):
         return sheets
 
     if args.list:
-        analyses = get_analyses()
+        path = os.path.dirname(os.path.abspath(__file__)) + '/analyses'
+        analyses = get_analyses(path)
         # Aligned output.
         template = '{0:26} - {1:50}'
         print('\nAvailable analyses:\n')
@@ -70,20 +71,28 @@ def parse_args(args):
 # Analyses modules to ignore.
 IGNORE = ['base']
 
-def get_analyses():
+def _filter_members(members, name):
+    if name in members:
+        members.remove(name)
+
+def get_analyses(path):
     """ Return dict mapping available analyses name to their description. """
     # Use absolute path from the current file so that the command works from
     # any directory.
-    path = os.path.dirname(os.path.abspath(__file__)) + '/analyses'
     dict = {}
     for importer, mod_name, ispkg in pkgutil.iter_modules([path]):
         if mod_name in IGNORE or ispkg:
             continue
         mod = importer.find_module(mod_name).load_module(mod_name)
         members = dir(mod)
+        members = list(filter(lambda n: not n.startswith('_'), members))
+        _filter_members(members, 'music21')
+        _filter_members(members, 'math')
+        _filter_members(members, 'prompt_for_key')
         # Valid members look like ['BaseAnalysis', '$AnalysisClass', ...]
-        if members[0] == 'BaseAnalysis':
-            analysis_class = getattr(mod, members[1])
+        if 'BaseAnalysis' in members:
+            members.remove('BaseAnalysis')
+            analysis_class = getattr(mod, members[0])
             # Does not need to be a real composition analysis.
             instance = analysis_class(None)
             # TODO: Perhaps change BaseAnalysis.description to @staticmethod,
